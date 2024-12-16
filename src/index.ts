@@ -40,17 +40,17 @@ async function makeRequest({
       headers,
     })
     
-    const fetchTime = Date.now() - startTime
+    const fetchTimeMS = Date.now() - startTime
 
     if (stream) {
       const reader = response.body!.getReader()
       const decoder = new TextDecoder("utf-8")
-      logger.info({ id, fetchTime, stream: true }, "makeRequest completed")
+      logger.info({ id, fetchTime: fetchTimeMS, stream: true }, "makeRequest completed")
       return { response, reader, decoder }
     } else {
       const data = await response.json()
       const totalTime = Date.now() - startTime
-      logger.info({ id, fetchTime, totalTime, stream: false }, "makeRequest completed")
+      logger.info({ id, fetchTime: fetchTimeMS, totalTime, stream: false }, "makeRequest completed")
       return { response, data }
     }
   } catch (error) {
