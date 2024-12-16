@@ -18,10 +18,10 @@ interface RequestOptions {
 }
 
 type MakeRequestReturn = {
-  response: globalThis.Response; // Prevent conflict with express Response
-  reader?: ReadableStreamDefaultReader<Uint8Array>;
-  decoder?: TextDecoder;
-  data?: any;
+  response: globalThis.Response // Prevent conflict with express Response
+  reader?: ReadableStreamDefaultReader<Uint8Array>
+  decoder?: TextDecoder
+  data?: any
 }
 
 async function makeRequest({
@@ -39,18 +39,24 @@ async function makeRequest({
       body: JSON.stringify(body),
       headers,
     })
-    
+
     const fetchTimeMS = Date.now() - startTime
 
     if (stream) {
       const reader = response.body!.getReader()
       const decoder = new TextDecoder("utf-8")
-      logger.info({ id, fetchTime: fetchTimeMS, stream: true }, "makeRequest completed")
+      logger.info(
+        { id, fetchTime: fetchTimeMS, stream: true },
+        "makeRequest completed"
+      )
       return { response, reader, decoder }
     } else {
       const data = await response.json()
       const totalTime = Date.now() - startTime
-      logger.info({ id, fetchTime: fetchTimeMS, totalTime, stream: false }, "makeRequest completed")
+      logger.info(
+        { id, fetchTime: fetchTimeMS, totalTime, stream: false },
+        "makeRequest completed"
+      )
       return { response, data }
     }
   } catch (error) {
@@ -78,21 +84,26 @@ app.all("/v1/*", async (req: Request, res: Response) => {
   try {
     const id = crypto.randomUUID()
 
-    const result = await Promise.race(Array.from({ length: HEDGE_COUNT }, () => makeRequest({
-      id,
-      method: req.method,
-      url,
-      body,
-      headers,
-      stream: isStreaming,
-    })))
+    const result = await Promise.race(
+      Array.from({ length: HEDGE_COUNT }, () =>
+        makeRequest({
+          id,
+          method: req.method,
+          url,
+          body,
+          headers,
+          stream: isStreaming,
+        })
+      )
+    )
 
-    logger.info({
-      id,
-      time_taken: Date.now() - startTime,
-      is_streaming: isStreaming,
-      path,
-    },
+    logger.info(
+      {
+        id,
+        time_taken: Date.now() - startTime,
+        is_streaming: isStreaming,
+        path,
+      },
       "request race finished"
     )
 
