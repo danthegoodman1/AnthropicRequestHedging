@@ -67,6 +67,7 @@ async function makeRequest({
 }
 
 app.all("/v1/*", async (req: Request, res: Response) => {
+  throw new Error("test")
   const path = req.params[0]
   const url = `${ANTHROPIC_BASE_URL}/v1/${path}`
   const body = req.body

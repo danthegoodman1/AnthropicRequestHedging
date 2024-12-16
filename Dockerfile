@@ -31,4 +31,4 @@ COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /app/dist ./dist
 COPY ./package.json /app/
 
-ENTRYPOINT ["node", "dist/index.js"]
+ENTRYPOINT ["node", "--enable-source-maps", "dist/index.js"]
