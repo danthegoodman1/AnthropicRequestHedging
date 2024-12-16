@@ -29,7 +29,8 @@ async def test_normal_message():
 
 
 @pytest.mark.asyncio
-async def test_streaming_message():
+# @pytest.mark.parametrize('_', range(100))
+async def test_streaming_message(_):
     """Test a streaming message response"""
     stream = await client.messages.create(
         model="claude-3-5-sonnet-latest",
