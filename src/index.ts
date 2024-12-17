@@ -66,6 +66,10 @@ async function makeRequest({
   }
 }
 
+app.all("/hc", (req: Request, res: Response) => {
+  res.status(200).send("ok")
+})
+
 app.all("/v1/*", async (req: Request, res: Response) => {
   const path = req.params[0]
   const url = `${ANTHROPIC_BASE_URL}/v1/${path}`
@@ -134,7 +138,7 @@ app.all("/v1/*", async (req: Request, res: Response) => {
   }
 })
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
   logger.info(`Server is running on port ${PORT}`)
 })
