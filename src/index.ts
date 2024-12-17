@@ -6,7 +6,7 @@ app.use(express.json())
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
 const ANTHROPIC_BASE_URL = "https://api.anthropic.com"
-const HEDGE_COUNT = Number(process.env.HEDGE_COUNT) || 2
+const HEDGE_COUNT = Number(process.env.HEDGE_COUNT) + 1 || 1
 
 interface RequestOptions {
   id: string
