@@ -6,7 +6,7 @@ app.use(express.json())
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
 const ANTHROPIC_BASE_URL = "https://api.anthropic.com"
-const HEDGE_COUNT = Number(process.env.HEDGE_COUNT) + 1 || 1
+const RequestCount = 1 + (Number(process.env.HEDGE_FACTOR) || 1)
 
 interface RequestOptions {
   id: string
@@ -85,7 +85,7 @@ app.all("/v1/*", async (req: Request, res: Response) => {
     const id = crypto.randomUUID()
 
     const result = await Promise.race(
-      Array.from({ length: HEDGE_COUNT }, () =>
+      Array.from({ length: RequestCount }, () =>
         makeRequest({
           id,
           method: req.method,
