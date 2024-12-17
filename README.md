@@ -1,6 +1,8 @@
-# Anthropic Request Hedging Proxy
+# Anthropic Request Hedging Proxy (PoC)
 
 Simple proxy that works with streamed or non-streamed responses to reduce tail latencies by duplicating the request, and responding with the first one
+
+This repo will likely not be maintained or upgraded, and if I do make an open source project, will be more generic and featureful.
 
 
 Tested working with the official python client
