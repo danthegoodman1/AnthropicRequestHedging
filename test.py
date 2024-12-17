@@ -29,7 +29,7 @@ async def test_normal_message():
 
 
 @pytest.mark.asyncio
-# @pytest.mark.parametrize('_', range(100))
+@pytest.mark.parametrize('_', range(200))
 async def test_streaming_message(_):
     """Test a streaming message response"""
     stream = await client.messages.create(
